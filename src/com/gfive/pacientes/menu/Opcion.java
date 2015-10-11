@@ -24,18 +24,26 @@ public class Opcion {
      * True si la opción significa salir del menú actual, false de lo contrario.
      */
     private final boolean indicaSalir;
+    
+    /**
+     * Workflow que se ejecuta cuando selecciona la opción. Puede ser null para las opciones que
+     * indican salir.
+     */
+    private final Runnable workflow;
 
     /**
      * Construye la opción con código y descripción.
      * @param codigo - número usado para seleccionarla.
      * @param descripcion - texto que se muestra al usuario. No puede ser null.
      * @param indicaSalir - true si la opción significa ir al menú anterior, false de lo contrario.
+     * @param workflow - función que se ejecuta al seleccionar la opción.
      */
-    public Opcion(int codigo, String descripcion, boolean indicaSalir) {
+    public Opcion(int codigo, String descripcion, boolean indicaSalir, Runnable workflow) {
         Objects.requireNonNull(descripcion);
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.indicaSalir = indicaSalir;
+        this.workflow = workflow;
     }
 
     public int codigo() {
@@ -48,5 +56,9 @@ public class Opcion {
     
     public boolean indicaSalir() {
         return indicaSalir;
+    }
+
+    public void ejecutar() {
+        workflow.run();
     }
 }

@@ -1,19 +1,17 @@
 package com.gfive.pacientes;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.gfive.pacientes.negocio.Almacen;
+import com.gfive.pacientes.workflow.menu.WorkflowPrincipal;
 
-import com.gfive.pacientes.menu.MenuControlPacientes;
-import com.gfive.pacientes.menu.MenuInformes;
-import com.gfive.pacientes.menu.MenuPrincipal;
 
 class ControlPacientes {
+    
+    public static void main(String[] args) {
+        new WorkflowPrincipal().run();
+        Almacen.instancia.escribir();
+    }
 
-    public static void main(String args[]) throws Exception {
+    /*public static void main(String args[]) throws Exception {
         String op = "";
         int sw = 0, sw1 = 0;
         int op1, op2; // variables de selección usadas en los diferentes menús
@@ -304,5 +302,5 @@ class ControlPacientes {
                 }
             }
         } while (op1 != 3);
-    }
+    }*/
 }

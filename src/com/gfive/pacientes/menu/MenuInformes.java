@@ -15,9 +15,9 @@ public class MenuInformes extends Menu {
             "   :-:.........................................:-:\n";
     
     private final static Opcion[] OPCIONES = {
-        new Opcion(1, "Listado de pacientes por médico", false),
-        new Opcion(1, "Enfermedades que atiende cada médico", false),
-        new Opcion(1, "Anterior", true)
+        new Opcion(1, "Listado de pacientes por médico", false, null),
+        new Opcion(2, "Enfermedades que atiende cada médico", false, null),
+        new Opcion(3, "Anterior", true, null)
     };
     
     public MenuInformes() {
