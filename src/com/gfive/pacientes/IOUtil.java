@@ -37,7 +37,6 @@ public class IOUtil {
         }
     }
     
-
     /**
      * Lee una cadena arbitraria del teclado mostrando el mensaje dado.
      * @param mensaje - mensaje que se muestra al usuario antes de leer la cadena.
