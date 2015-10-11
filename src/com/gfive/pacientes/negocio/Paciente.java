@@ -44,4 +44,9 @@ public class Paciente implements Serializable {
         return new Paciente(IOUtil.leerCadena("Digite el codigo del paciente: "),
                             IOUtil.leerCadena("Digite el nombre del paciente: "));
     }
+    
+    @Override
+    public String toString() {
+        return codigo + " - " + nombre;
+    }
 }
