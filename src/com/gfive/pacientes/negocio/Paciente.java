@@ -19,7 +19,7 @@ public class Paciente implements Serializable {
     /**
      * Código que identifica al paciente en el sistema.
      */
-    public final String codigo;
+    public String codigo;
     
     /**
      * Nombre completo.

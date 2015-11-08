@@ -14,14 +14,18 @@ public class WorkflowIngresoDatosPaciente implements Runnable {
 
     @Override
     public void run() {
-        Almacen.instancia.pacientes.clear();
         String opcion;
         do {
             System.out.println("   ...............................................");
             System.out.println("   :-:  - D A T O S  D E L  P A C I E N T E -  :-:");
             System.out.println("   :-:.........................................:-:");
             
-            Almacen.instancia.pacientes.add(Paciente.leerDelTeclado());
+            Paciente paciente = Paciente.leerDelTeclado();
+            while (Almacen.instancia.buscarPaciente(paciente.codigo).isPresent()) {
+                paciente.codigo =
+                        IOUtil.leerCadena("El ID de paciente ya está registrado. Intente con otro:");
+            }
+            Almacen.instancia.pacientes.add(paciente);
 
             System.out.println("Desea ingresar otro paciente? S/N");
             opcion = IOUtil.leerCadena();

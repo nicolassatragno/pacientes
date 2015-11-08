@@ -1,5 +1,6 @@
 package com.gfive.pacientes.menu;
 
+import com.gfive.pacientes.workflow.reportes.WorkflowEnfermedadesPorMedico;
 import com.gfive.pacientes.workflow.reportes.WorkflowPacientesPorMedico;
 
 
@@ -18,7 +19,7 @@ public class MenuInformes extends Menu {
     
     private final static Opcion[] OPCIONES = {
         new Opcion(1, "Listado de pacientes por médico", false, new WorkflowPacientesPorMedico()),
-        new Opcion(2, "Enfermedades que atienden médicos", false, null),
+        new Opcion(2, "Enfermedades que atienden médicos", false, new WorkflowEnfermedadesPorMedico()),
         new Opcion(3, "Anterior", true, null)
     };
     

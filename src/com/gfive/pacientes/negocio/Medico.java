@@ -19,7 +19,7 @@ public class Medico implements Serializable {
     /**
      * Código del médico en el sistema.
      */
-    public final String codigo;
+    public String codigo;
 
     /**
      * Nombre completo.

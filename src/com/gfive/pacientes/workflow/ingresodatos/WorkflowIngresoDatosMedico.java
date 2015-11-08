@@ -21,7 +21,13 @@ public class WorkflowIngresoDatosMedico implements Runnable {
             System.out.println("   :-:      - D A T O S   D E L   M E D I C O -      :-:");
             System.out.println("   :-:...............................................:-:");
             
-            Almacen.instancia.medicos.add(Medico.leerDelTeclado());
+            Medico medicoNuevo = Medico.leerDelTeclado();
+            while (Almacen.instancia.buscarMedico(medicoNuevo.codigo).isPresent()) {
+                medicoNuevo.codigo =
+                        IOUtil.leerCadena("El ID de médico ya existe. Ingrese un ID distinto:");
+            }
+
+            Almacen.instancia.medicos.add(medicoNuevo);
 
             System.out.println("Desea ingresar otro médico? S/N");
             opcion = IOUtil.leerCadena();

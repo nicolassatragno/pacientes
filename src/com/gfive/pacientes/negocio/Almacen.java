@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -93,15 +94,8 @@ public class Almacen {
      * Lee un médico existente del teclado.
      * @return el médico que coincide con el código leído.
      */
-    public Medico obtenerMedico() {
-        String codigoMedico = IOUtil.leerCadena("Ingrese el código del médico: ");
-        Optional<Medico> medico = buscarMedico(codigoMedico);
-        while (!medico.isPresent()) {
-            medico = buscarMedico(
-                    IOUtil.leerCadena("El médico no existe. Intente nuevamente: "));
-        }
-        
-        return medico.get();
+    public Optional<Medico> obtenerMedico() {
+        return obtener("Ingrese el código del médico", this::buscarMedico);
     }
 
     /**
@@ -109,7 +103,7 @@ public class Almacen {
      * @param codigo
      * @return
      */
-    private Optional<Medico> buscarMedico(String codigo) {
+    public Optional<Medico> buscarMedico(String codigo) {
         return medicos.stream()
                       .filter(p -> p.codigo.equals(codigo))
                       .findAny();
@@ -119,15 +113,28 @@ public class Almacen {
      * Lee un paciente existente del teclado.
      * @return el paciente que coincide con el código leído.
      */
-    public Paciente obtenerPaciente() {
-        String codigoPaciente = IOUtil.leerCadena("Ingrese el código del paciente: ");
-        Optional<Paciente> paciente = buscarPaciente(codigoPaciente);
-        while (!paciente.isPresent()) {
-            paciente = buscarPaciente(
-                    IOUtil.leerCadena("El paciente no existe. Intente nuevamente: "));
+    public Optional<Paciente> obtenerPaciente() {
+        return obtener("Ingrese el código del paciente", this::buscarPaciente);
+    }
+    
+    /**
+     * Lee un objeto del teclado.
+     * @param query - el mensaje que se muestra al usuario.
+     * @param supplier - la función que recibe el código y devuelve un opcional.
+     * @return el objeto leído.
+     */
+    private <T> Optional<T> obtener(String query, Function<String, Optional<T>> supplier) {
+        String codigo = IOUtil.leerCadena(query + " (-1 para cancelar): ");
+        if (codigo.equals("-1"))
+            return Optional.empty();
+        Optional<T> objeto = supplier.apply(codigo);
+        while (!objeto.isPresent()) {
+            codigo = IOUtil.leerCadena("El código ingresado no se encuentra.\n" + query);
+            if (codigo.equals("-1"))
+                return Optional.empty();
+            objeto = supplier.apply(codigo);
         }
-        
-        return paciente.get();
+        return objeto;
     }
     
     /**
@@ -135,7 +142,7 @@ public class Almacen {
      * @param codigo
      * @return
      */
-    private Optional<Paciente> buscarPaciente(String codigo) {
+    public Optional<Paciente> buscarPaciente(String codigo) {
         return pacientes.stream()
                         .filter(p -> p.codigo.equals(codigo))
                         .findAny();

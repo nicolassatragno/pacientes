@@ -1,5 +1,8 @@
 package com.gfive.pacientes.negocio;
 
+import java.io.Serializable;
+import java.util.Optional;
+
 import com.gfive.pacientes.IOUtil;
 
 /**
@@ -7,7 +10,12 @@ import com.gfive.pacientes.IOUtil;
  * @author nicolas
  *
  */
-public class Situacion {
+public class Situacion implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 303298398983L;
 
     /**
      * Paciente al que la situación está relacionada.
@@ -40,9 +48,15 @@ public class Situacion {
      * Lee la situación del teclado.
      * @return la situación leída.
      */
-    public static Situacion leerDelTeclado() {
-        return new Situacion(Almacen.instancia.obtenerPaciente(),
-                             Almacen.instancia.obtenerMedico(),
-                             IOUtil.leerCadena("Ingrese el diagnóstico del médico"));
+    public static Optional<Situacion> leerDelTeclado() {
+        Optional<Paciente> paciente = Almacen.instancia.obtenerPaciente();
+        if (!paciente.isPresent())
+            return Optional.empty();
+        Optional<Medico> medico = Almacen.instancia.obtenerMedico();
+        if (!medico.isPresent())
+            return Optional.empty();
+        return Optional.of(new Situacion(paciente.get(),
+                             medico.get(),
+                             IOUtil.leerCadena("Ingrese el diagnóstico del médico")));
     }
 }
